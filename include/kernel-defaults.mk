@@ -143,17 +143,15 @@ define Kernel/CopyImage
 	$(KERNEL_CROSS)objcopy -O binary $(OBJCOPY_STRIP) -S $(LINUX_DIR)/vmlinux $(LINUX_KERNEL)$(1)
 	$(KERNEL_CROSS)objcopy $(OBJCOPY_STRIP) -S $(LINUX_DIR)/vmlinux $(KERNEL_BUILD_DIR)/vmlinux$(1).elf
 	$(CP) $(LINUX_DIR)/vmlinux $(KERNEL_BUILD_DIR)/vmlinux.debug
-ifneq ($(subst ",,$(KERNELNAME)),)
-	#")
-	$(foreach k,$(filter-out dtbs,$(subst ",,$(KERNELNAME))),$(CP) $(LINUX_DIR)/arch/$(LINUX_KARCH)/boot/$(IMAGES_DIR)/$(k) $(KERNEL_BUILD_DIR)/$(k)$(1);)
-	#")
-endif
+	$(foreach k, \
+		$(if $(KERNEL_IMAGES),$(KERNEL_IMAGES),$(filter-out dtbs,$(KERNELNAME))), \
+		$(CP) $(LINUX_DIR)/arch/$(LINUX_KARCH)/boot/$(IMAGES_DIR)/$(k) $(KERNEL_BUILD_DIR)/$(k)$(1); \
+	)
 endef
 
 define Kernel/CompileImage/Default
 	rm -f $(TARGET_DIR)/init
-	+$(MAKE) $(KERNEL_MAKEOPTS) $(subst ",,$(KERNELNAME))
-	#")
+	+$(MAKE) $(KERNEL_MAKEOPTS) $(if $(KERNELNAME),$(KERNELNAME),all) modules
 	$(call Kernel/CopyImage)
 endef
 
@@ -162,9 +160,7 @@ define Kernel/CompileImage/Initramfs
 	$(call Kernel/Configure/Initramfs)
 	$(CP) $(GENERIC_PLATFORM_DIR)/base-files/init $(TARGET_DIR)/init
 	rm -rf $(KERNEL_BUILD_DIR)/linux-$(LINUX_VERSION)/usr/initramfs_data.cpio*
-	+$(MAKE) $(KERNEL_MAKEOPTS) $(subst ",,$(KERNELNAME))
-	#")
-	#")
+	+$(MAKE) $(KERNEL_MAKEOPTS) $(if $(KERNELNAME),$(KERNELNAME),all) modules
 	$(call Kernel/CopyImage,-initramfs)
 endef
 else

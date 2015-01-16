@@ -9,7 +9,6 @@ This commit should not be moved to newer kernel versions!
 
 Signed-off-by: Hartmut Knaack <knaack.h@gmx.de>
 ---
-diff -uprN a/drivers/staging/iio/adc/ad799x_core.c b/drivers/staging/iio/adc/ad799x_core.c
 --- a/drivers/staging/iio/adc/ad799x_core.c
 +++ b/drivers/staging/iio/adc/ad799x_core.c
 @@ -163,7 +163,6 @@ static int ad799x_read_raw(struct iio_de
@@ -130,7 +129,6 @@ diff -uprN a/drivers/staging/iio/adc/ad799x_core.c b/drivers/staging/iio/adc/ad7
  	kfree(st->rx_buf);
  	iio_device_free(indio_dev);
  
-diff -uprN a/drivers/staging/iio/adc/ad799x.h b/drivers/staging/iio/adc/ad799x.h
 --- a/drivers/staging/iio/adc/ad799x.h
 +++ b/drivers/staging/iio/adc/ad799x.h
 @@ -103,7 +103,7 @@ struct ad799x_state {

@@ -97,6 +97,7 @@ CONFIGURE_ARGS += \
 	--disable-manual \
 	--disable-verbose \
 	--without-ca-bundle \
+	$(if $(CONFIG_LIBCURL_OPENSSL),--with-ca-path=/etc/ssl/certs/) \
 	--without-krb4 \
 	--without-libidn \
 	--without-nss \
@@ -144,7 +145,7 @@ define Build/InstallDev
 	$(CP) $(PKG_BUILD_DIR)/libcurl.pc $(1)/usr/lib/pkgconfig/
 	$(SED) 's,-L$$$${exec_prefix}/lib,,g' $(1)/usr/bin/curl-config
 	[ -n "$(TARGET_LDFLAGS)" ] && $(SED) 's#$(TARGET_LDFLAGS)##g' $(1)/usr/lib/pkgconfig/libcurl.pc || true
-	ln -sf $(STAGING_DIR)/usr/bin/curl-config $(2)/bin/
+	$(LN) $(STAGING_DIR)/usr/bin/curl-config $(2)/bin/
 endef
 
 define Package/curl/install

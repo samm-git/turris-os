@@ -57,6 +57,7 @@ boot() {
 	rm -f /tmp/wireless.tmp
 
 	feed_urandom
+	/bin/board_detect
 	uci_apply_defaults
 	
 	# temporary hack until configd exists

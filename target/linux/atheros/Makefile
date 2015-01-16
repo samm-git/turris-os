@@ -11,7 +11,7 @@ BOARD:=atheros
 BOARDNAME:=Atheros AR231x/AR5312
 FEATURES:=squashfs low_mem
 
-KERNEL_PATCHVER:=3.10
+KERNEL_PATCHVER:=3.14
 
 include $(INCLUDE_DIR)/target.mk
 

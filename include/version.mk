@@ -17,28 +17,31 @@ PKG_CONFIG_DEPENDS += \
 	CONFIG_VERSION_PRODUCT \
 	CONFIG_VERSION_HWREV \
 
-VERSION_NUMBER:=$(call qstrip,$(CONFIG_VERSION_NUMBER))
-VERSION_NUMBER:=$(if $(VERSION_NUMBER),$(VERSION_NUMBER),14.07)
+qstrip_escape=$(subst ','\'',$(call qstrip,$(1)))
+#'
 
-VERSION_CODE:=$(call qstrip,$(CONFIG_VERSION_NUMBER))
-VERSION_CODE:=$(if $(VERSION_CODE),$(VERSION_CODE),Barrier Breaker)
+VERSION_NUMBER:=$(call qstrip_escape,$(CONFIG_VERSION_NUMBER))
+VERSION_NUMBER:=$(if $(VERSION_NUMBER),$(VERSION_NUMBER),$(REVISION))
 
-VERSION_NICK:=$(call qstrip,$(CONFIG_VERSION_NICK))
+VERSION_CODE:=$(call qstrip_escape,$(CONFIG_VERSION_NUMBER))
+VERSION_CODE:=$(if $(VERSION_CODE),$(VERSION_CODE),Bleeding Edge)
+
+VERSION_NICK:=$(call qstrip_escape,$(CONFIG_VERSION_NICK))
 VERSION_NICK:=$(if $(VERSION_NICK),$(VERSION_NICK),$(RELEASE))
 
-VERSION_REPO:=$(call qstrip,$(CONFIG_VERSION_REPO))
-VERSION_REPO:=$(if $(VERSION_REPO),$(VERSION_REPO),http://downloads.openwrt.org/%n/%v/%S/packages)
+VERSION_REPO:=$(call qstrip_escape,$(CONFIG_VERSION_REPO))
+VERSION_REPO:=$(if $(VERSION_REPO),$(VERSION_REPO),http://downloads.openwrt.org/snapshots/trunk/%s/packages)
 
-VERSION_DIST:=$(call qstrip,$(CONFIG_VERSION_DIST))
+VERSION_DIST:=$(call qstrip_escape,$(CONFIG_VERSION_DIST))
 VERSION_DIST:=$(if $(VERSION_DIST),$(VERSION_DIST),OpenWrt)
 
-VERSION_MANUFACTURER:=$(call qstrip,$(CONFIG_VERSION_MANUFACTURER))
+VERSION_MANUFACTURER:=$(call qstrip_escape,$(CONFIG_VERSION_MANUFACTURER))
 VERSION_MANUFACTURER:=$(if $(VERSION_MANUFACTURER),$(VERSION_MANUFACTURER),OpenWrt)
 
-VERSION_PRODUCT:=$(call qstrip,$(CONFIG_VERSION_PRODUCT))
+VERSION_PRODUCT:=$(call qstrip_escape,$(CONFIG_VERSION_PRODUCT))
 VERSION_PRODUCT:=$(if $(VERSION_PRODUCT),$(VERSION_PRODUCT),Generic)
 
-VERSION_HWREV:=$(call qstrip,$(CONFIG_VERSION_HWREV))
+VERSION_HWREV:=$(call qstrip_escape,$(CONFIG_VERSION_HWREV))
 VERSION_HWREV:=$(if $(VERSION_HWREV),$(VERSION_HWREV),v0)
 
 define taint2sym
@@ -76,7 +79,10 @@ VERSION_SED:=$(SED) 's,%U,$(VERSION_REPO),g' \
 	-e 's,%R,$(REVISION),g' \
 	-e 's,%T,$(BOARD),g' \
 	-e 's,%S,$(BOARD)/$(if $(SUBTARGET),$(SUBTARGET),generic),g' \
+	-e 's,%s,$(BOARD)$(if $(filter-out generic,$(SUBTARGET)),.$(SUBTARGET)),g' \
 	-e 's,%t,$(VERSION_TAINTS),g' \
 	-e 's,%M,$(VERSION_MANUFACTURER),g' \
 	-e 's,%P,$(VERSION_PRODUCT),g' \
 	-e 's,%h,$(VERSION_HWREV),g'
+
+VERSION_SED_SCRIPT:=$(subst '\'','\'\\\\\'\'',$(VERSION_SED))

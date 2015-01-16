@@ -152,7 +152,7 @@ tplink_board_detect() {
 		model="TP-Link TL-WA901N/ND"
 		;;
 	"094100"*)
-		if [ "$hwid" == "09410002" -a "$mid" == "00420001" ]; then
+		if [ "$hwid" = "09410002" -a "$mid" = "00420001" ]; then
 			model="Rosewill RNX-N360RT"
 			hwver=""
 		else
@@ -214,12 +214,52 @@ tplink_board_detect() {
 	"934100"*)
 		model="NC-LINK SMART-300"
 		;;
+	"c50000"*)
+		model="TP-Link Archer C5"
+		;;
+	"750000"*|\
+	"c70000"*)
+		model="TP-Link Archer C7"
+		;;
 	*)
 		hwver=""
 		;;
 	esac
 
 	AR71XX_MODEL="$model $hwver"
+}
+
+tplink_pharos_get_model_string() {
+	local part
+	part=$(find_mtd_part 'product-info')
+	[ -z "$part" ] && return 1
+
+	# The returned string will end with \r\n, but we don't remove it here
+	# to simplify matching against it in the sysupgrade image check
+	dd if=$part bs=1 skip=4360 2>/dev/null | head -n 1
+}
+
+tplink_pharos_board_detect() {
+	local model_string="$(tplink_pharos_get_model_string | tr -d '\r')"
+	local oIFS="$IFS"; IFS=":"; set -- $model_string; IFS="$oIFS"
+	local model
+
+	case "$1" in
+	'CPE210(TP-LINK|UN|N300-2)')
+		model='TP-Link CPE210'
+		;;
+	'CPE220(TP-LINK|UN|N300-2)')
+		model='TP-Link CPE220'
+		;;
+	'CPE510(TP-LINK|UN|N300-5)')
+		model='TP-Link CPE510'
+		;;
+	'CPE520(TP-LINK|UN|N300-5)')
+		model='TP-Link CPE520'
+		;;
+	esac
+
+	[ -n "$model" ] && AR71XX_MODEL="$model v$2"
 }
 
 ar71xx_board_detect() {
@@ -231,6 +271,9 @@ ar71xx_board_detect() {
 	case "$machine" in
 	*"Oolite V1.0")
 		name="oolite"
+		;;
+	*"AC1750DB")
+		name="f9k1115v2"
 		;;
 	*"AirGateway")
 		name="airgateway"
@@ -295,8 +338,18 @@ ar71xx_board_detect() {
 	*CAP4200AG)
 		name="cap4200ag"
 		;;
+	*"CPE210/220/510/520")
+		name="cpe510"
+		tplink_pharos_board_detect
+		;;
 	*"DB120 reference board")
 		name="db120"
+		;;
+	*"DGL-5500 rev. A1")
+		name="dgl-5500-a1"
+		;;
+	*"DHP-1565 rev. A1")
+		name="dhp-1565-a1"
 		;;
 	*"DIR-505 rev. A1")
 		name="dir-505-a1"
@@ -352,6 +405,9 @@ ar71xx_board_detect() {
 	*"Bullet M")
 		name="bullet-m"
 		;;
+	*"Loco M XW")
+		name="loco-m-xw"
+		;;
 	*"Nanostation M")
 		name="nanostation-m"
 		;;
@@ -381,6 +437,12 @@ ar71xx_board_detect() {
 		;;
 	*MR600)
 		name="mr600"
+		;;
+	*MR900)
+		name="mr900"
+		;;
+	*MR900v2)
+		name="mr900v2"
 		;;
 	*"My Net N600")
 		name="mynet-n600"
@@ -429,6 +491,9 @@ ar71xx_board_detect() {
 		;;
 	*PB92)
 		name="pb92"
+		;;
+	*"Qihoo 360 C301")
+		name="qihoo-c301"
 		;;
 	*"RouterBOARD 411/A/AH")
 		name="rb-411"
@@ -679,11 +744,17 @@ ar71xx_board_detect() {
 	*"WNDR3700/WNDR3800/WNDRMAC")
 		wndr3700_board_detect "$machine"
 		;;
+	*"R6100")
+		name="r6100"
+		;;
 	*"WNDR3700v4")
 		name="wndr3700v4"
 		;;
 	*"WNDR4300")
 		name="wndr4300"
+		;;
+	*"WNR2000 V4")
+		name="wnr2000-v4"
 		;;
 	*"WNR2000 V3")
 		name="wnr2000-v3"
@@ -702,6 +773,9 @@ ar71xx_board_detect() {
 		;;
 	*WRT400N)
 		name="wrt400n"
+		;;
+	*"WZR-450HP2")
+		name="wzr-450hp2"
 		;;
 	*"WZR-HP-AG300H/WZR-600DHP")
 		name="wzr-hp-ag300h"
@@ -744,11 +818,8 @@ ar71xx_board_detect() {
 		;;
 	esac
 
-	case "$machine" in
-	*TL-WR* | *TL-WA* | *TL-MR* | *TL-WD*)
+	[ -z "$AR71XX_MODEL" ] && [ "${machine:0:8}" = 'TP-LINK ' ] && \
 		tplink_board_detect "$machine"
-		;;
-	esac
 
 	[ -z "$name" ] && name="unknown"
 
