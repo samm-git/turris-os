@@ -266,7 +266,6 @@ source "tmp/.config-feeds.in"
 		help
 			This is the hardware revision string embedded in /etc/device_info
 			Useful for OEMs building OpenWrt based firmware
-endif
 
 
 menuconfig PER_FEED_REPO
