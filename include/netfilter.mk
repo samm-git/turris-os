@@ -283,18 +283,10 @@ $(eval $(call nf_add,NFNETLINK,CONFIG_NETFILTER_NETLINK, $(P_XT)nfnetlink))
 # nflog
 
 $(eval $(call nf_add,NFNETLINK_LOG,CONFIG_NETFILTER_NETLINK_LOG, $(P_XT)nfnetlink_log))
-<<<<<<< HEAD
-$(eval $(call nf_add,NFNETLINK_LOG,CONFIG_NETFILTER_XT_TARGET_NFLOG, $(P_XT)xt_NFLOG))
-=======
->>>>>>> trunk-upstream
 
 # nfqueue
 
 $(eval $(call nf_add,NFNETLINK_QUEUE,CONFIG_NETFILTER_NETLINK_QUEUE, $(P_XT)nfnetlink_queue))
-<<<<<<< HEAD
-$(eval $(call nf_add,NFNETLINK_QUEUE,CONFIG_NETFILTER_XT_TARGET_NFQUEUE, $(P_XT)xt_NFQUEUE))
-=======
->>>>>>> trunk-upstream
 
 #
 # ebtables
@@ -332,8 +324,6 @@ $(eval $(call nf_add,EBTABLES_WATCHERS,CONFIG_BRIDGE_EBT_ULOG, $(P_EBT)ebt_ulog)
 $(eval $(call nf_add,EBTABLES_WATCHERS,CONFIG_BRIDGE_EBT_NFLOG, $(P_EBT)ebt_nflog))
 $(eval $(call nf_add,EBTABLES_WATCHERS,CONFIG_BRIDGE_EBT_NFQUEUE, $(P_EBT)ebt_nfqueue))
 
-<<<<<<< HEAD
-=======
 # nftables
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NF_TABLES, $(P_XT)nf_tables, ge 3.14.0),))
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NF_TABLES_INET, $(P_XT)nf_tables_inet, ge 3.14.0),))
@@ -358,7 +348,6 @@ $(eval $(if $(NF_KMOD),$(call nf_add,NFT_NAT6,CONFIG_NFT_CHAIN_NAT_IPV6, $(P_V6)
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_NAT,CONFIG_NFT_MASQ, $(P_XT)nft_masq, ge 3.18.0),))
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_NAT,CONFIG_NFT_MASQ_IPV4, $(P_V4)nft_masq_ipv4, ge 3.18.0),))
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_NAT,CONFIG_NFT_MASQ_IPV6, $(P_V6)nft_masq_ipv6, ge 3.18.0),))
->>>>>>> trunk-upstream
 
 # userland only
 IPT_BUILTIN += $(NF_IPT-y) $(NF_IPT-m)
