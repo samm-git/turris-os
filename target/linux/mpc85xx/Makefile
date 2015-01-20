@@ -12,7 +12,7 @@ BOARDNAME:=Freescale MPC85xx
 CPU_TYPE:=8540
 FEATURES:=spe_fpu squashfs
 MAINTAINER:=Imre Kaloz <kaloz@openwrt.org>
-SUBTARGETS=p1010 p2020-nor p2020-nand
+SUBTARGETS=p1010 p2020_nor p2020_nand
 
 KERNEL_PATCHVER:=3.14
 
