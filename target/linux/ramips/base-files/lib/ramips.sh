@@ -91,6 +91,9 @@ ramips_board_detect() {
 	*"Buffalo WSR-1166DHP")
 		name="wsr-1166"
 		;;
+	*"Firefly FireWRT")
+		name="firewrt"
+		;;
 	*"CY-SWR1100")
 		name="cy-swr1100"
 		;;
@@ -313,6 +316,9 @@ ramips_board_detect() {
 	*"Tenda 3G300M")
 		name="3g300m"
 		;;
+	*"Tenda 3G150B")
+		name="3g150b"
+		;;
 	*"Tenda W306R V2.0")
 		name="w306r-v20"
 		;;
@@ -360,6 +366,9 @@ ramips_board_detect() {
 		;;
 	*"Wansview NCS601W")
 		name="ncs601w"
+		;;
+	*"Xiaomi MiWiFi Mini")
+		name="xiaomi-miwifi-mini"
 		;;
 	*"Sercomm NA930")
 		name="na930"
