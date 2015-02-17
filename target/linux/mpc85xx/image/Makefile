@@ -27,8 +27,8 @@ BOOT_IMAGES:=zImage cuImage.tl-wdr4900-v1
 
 define Image/Prepare
 	if [ "$(PROFILE)" = "TURRISNOR" ]; then \
-	    $(STAGING_DIR_HOST)/bin/mksquashfs4 $(TOPDIR)/bin-nand/mpc85xx/medkit/medkit.tar.xz $(TOPDIR)/bin-nand/mpc85xx/medkit/medkit.squashfs \
-	    	-nopad -noappend -root-owned -comp $(SQUASHFSCOMP) -b 128k -processors $(if $(CONFIG_PKG_BUILD_JOBS),$(CONFIG_PKG_BUILD_JOBS),1); \
+		$(STAGING_DIR_HOST)/bin/mksquashfs4 $(TOPDIR)/bin-nand/mpc85xx/medkit/medkit.tar.xz $(TOPDIR)/bin-nand/mpc85xx/medkit/medkit.squashfs \
+		-nopad -noappend -root-owned -comp $(SQUASHFSCOMP) -b 128k -processors $(if $(CONFIG_PKG_BUILD_JOBS),$(CONFIG_PKG_BUILD_JOBS),1); \
 	fi
 
 	$(foreach image,$(BOOT_IMAGES),
@@ -95,12 +95,12 @@ define Image/Build/Profile/TURRISNOR
 	# Build NOR image with uboot
 	dd if=$(BIN_DIR)/$(IMG_PREFIX)-turris-nor.bin of=$(BIN_DIR)/$(IMG_PREFIX)-turris-nor-uboot.bin bs=128k
 	$(SCRIPT_DIR)/pad_with_ff $(BIN_DIR)/$(IMG_PREFIX)-turris-nor-uboot.bin 0x00f80000
-	#dd if=$(BIN_DIR)/uboot-mpc85xx/uboot-mpc85xx-TURRIS1 bs=128k >> $(BIN_DIR)/$(IMG_PREFIX)-turris-nor-uboot.bin  
+	#dd if=$(BIN_DIR)/uboot-mpc85xx/uboot-mpc85xx-TURRIS1 bs=128k >> $(BIN_DIR)/$(IMG_PREFIX)-turris-nor-uboot.bin
 	dd if=$(TOPDIR)/uboot-static/uboot-mpc85xx-TURRIS1 bs=128k >> $(BIN_DIR)/$(IMG_PREFIX)-turris-nor-uboot.bin
 
 	echo "Creating bootable SDCARD image."
 	if [ -d $(TOPDIR)/bin-sdcard ]; then rm -rf $(TOPDIR)/bin-sdcard; fi
-	mkdir $(TOPDIR)/bin-sdcard	
+	mkdir $(TOPDIR)/bin-sdcard
 
 	# cp $(BIN_DIR)/uboot-mpc85xx/uboot-mpc85xx-TURRIS1_SDCARD $(TOPDIR)/bin-sdcard/sdcard.img
 	cp $(TOPDIR)/uboot-static/uboot-mpc85xx-TURRIS1_SDCARD $(TOPDIR)/bin-sdcard/sdcard.img
@@ -115,7 +115,7 @@ define Image/Build/Profile/TURRISNAND
 	$(call Image/makeDTS,turris-nand)
 
 	dd if=$(BIN_DIR)/$(IMG_PREFIX)-turris-nand.fdt bs=128k conv=sync > $(BIN_DIR)/$(IMG_PREFIX)-turris-nand.bin
-	truncate -s 2M $(BIN_DIR)/$(IMG_PREFIX)-turris-nand.bin 
+	truncate -s 2M $(BIN_DIR)/$(IMG_PREFIX)-turris-nand.bin
 
 	dd if=$(KDIR)/zImage bs=128k conv=sync >> $(BIN_DIR)/$(IMG_PREFIX)-turris-nand.bin
 	truncate -s 7M $(BIN_DIR)/$(IMG_PREFIX)-turris-nand.bin
@@ -153,7 +153,7 @@ define Image/Build/jffs2-128k
 endef
 
 define Image/Build/jffs2-nand-2048-128k
-        dd if=$(KDIR)/root.$(1) of=$(BIN_DIR)/$(IMG_PREFIX)-$(1).img bs=128k conv=sync
+	dd if=$(KDIR)/root.$(1) of=$(BIN_DIR)/$(IMG_PREFIX)-$(1).img bs=128k conv=sync
 endef
 
 
