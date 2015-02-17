@@ -4,8 +4,7 @@
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
 #
-JFFS2_BLOCKSIZE:=128k
-NAND_BLOCKSIZE:=2048:128k
+NAND_BLOCKSIZE:=2048-128k
 
 define Profile/TURRISNAND
 	NAME:=Turris-nand
