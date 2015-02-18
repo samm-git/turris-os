@@ -26,8 +26,8 @@ define Profile/TURRISNAND
 		luci luci-i18n-czech zlib curl cert-backup foris update_mac wget \
 		userspace_time_sync openssh-moduli openssh-client \
 		openssh-sftp-client openssh-sftp-server openssh-client-utils watchdog_adjust \
-		ucollect-config init-thermometer rainbow wpa-supplicant turris-version spidev-test \
-		i2c-tools
+		ucollect-config init-thermometer rainbow wpa-supplicant turris-version \
+		smrt spidev-test i2c-tools
 endef
 
 define Profile/TURRISNAND/Description

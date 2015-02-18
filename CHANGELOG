@@ -1,3 +1,60 @@
+* Smrtd po sobě uklízí
+* User list na honeypot
+===================== 2.0 =======================
+* Novější verze squid
+* User list ca certificates a tor v nuci
+* Hlášení z coverity opravená v ucollect
+* Drobné opravy statistik z nuci (board name, turris OS version)
+* Novější OpenSSL (Bezpečnostní opravy, 1.0.1l)
+* Plugin bandwidth používá jiné veliskoti kyblíčků pro statistiky provozu
+* Nová verze nástroje Majordomo s lepší správou cache
+* Opraven "generátor sekund" v pluginu bandwidth
+* Updater má další CA root (GeoTrust)
+* Nová verze bandwidth, která definuje barvu turris-default a nastavuje ji podle HW revize
+* Squid na 3.4.10 kvůli IPv6
+* Foris (v50): nová verze pro Next - rychlejší, hezčí, úžasnější a SMRTící.
+* UNbound na 1.5.1 kvůli CVE-2014-8602
+* Zamergovaný next, upgrade celého openwrt
+* Přejaté opravy z upstreamu knihovny libnetconf
+* Oprava memory leaku v ucollect-buckets
+* SMRT daemon and image
+* Drobné uklízení v kódu v ucollect-buckets
+* Syslog povoluje větší zprávy
+* Ucollect vypisuje statistiky paměti
+* Oprava chyby v Majordomo, která způsobovala pád po přidání prázdné konfigurace
+* Oprava pořadí zobrazovaných měsíců v Majordomo
+* Základní optimalizace cache nástroje Majordomo
+===================== 1.8 =======================
+* Updaret fix: při běhu na pozadí po obnově to není ještě hotovo, neprohlašuj to za to
+* nuci: přidán majordomo do seznamu user-listů
+* ucollect-spoof: Nepřepisuj adresu NATem.
+* Firewall: Drobné opravy načítání pravidel přes ipsets + při downloadu pravidel použítat aktuálnější verzi crl.pem
+* Ucollect-bandwidth: Nově zpracovává statistiky vytížení linky
+* Autoritativní DNS server Knot povýšen na verzi 1.6.0
+===================== 1.7 =======================
+* watchdog sleduje lcollect
+* Ucollect-flow si řekne o nastavení i po reloadu
+* Vypnut chroot v unboundu (nefungoval s ním reload, žádnou větší bezpečnost stejně nepřinášel, běží jako root)
+* Ucollect-refused: Nový plugin pro sledování nezdařilých připojení
+* Foris (v46): opravena chyba, ke které mohlo docházet při současném přístupu více uživatelů do rozhraní.
+* Python: aktualizace na verzi 2.7.8.
+* Ucollect: Oprava problému s přetékáním času
+* Ucollect-flow: filtry na adresní rozsahy
+* Plugin ucollect-spoof (testování, jestli packet s podvrženou zdrojovou adresou projde)
+* Nový bash, oprava pouštění kódu přes environment
+* Firewall: Uživatel může nastavit, která pravidla pro firewall se mají aplikovat a která vynechat (/etc/config/firewall-turris)
+* Autoritativní DNS server Knot povýšen na verzi 1.5.3
+===================== 1.6 =======================
+* Updater: opravy chyb způsobujících pády při instalaci aktualizací (zejména lighttpd).
+* user_notify: diakritika v zasílaných emailech.
+* Firewall: pravidla pro turris se nahrávají pouze přes ipsets (iptables měly problémy s načtením většího počtu pravidel)
+* Updater: zbavení se race condition a dlouhého čekání na nic
+* Foris (v45): persistentní připojení k Nuci (cca o 20 % rychlejší načítání konfigurace).
+* Foris (v45): další přípravy pro aktualizace vyžadující restart.
+* Majordomo: Finální verze obsahující filter pro packety z lokální sítě a efektivnější implementacrie vnitřních struktur
+* nuci/updater: Ukazujeme i stažené balíčky, ne jen instalované a smazané
+* Ucollect-flow: Rozeznává, která strana započala komunikaci
+* Ucollect-flow: Filtry zasílané jen rozdíly proti minulé verzi
 * Updater: neponecháváme stovky příkazů sleep běžet po skončení
 ===================== 1.5 =======================
 * Foris (v42): opravena chyba při ukládání nastavení automatických restartů bez zapnutých notifikací.

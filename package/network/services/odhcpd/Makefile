@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=odhcpd
-PKG_VERSION:=2014-11-06
+PKG_VERSION:=2014-09-25-3
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
@@ -62,6 +62,22 @@ define Package/odhcpd/description
  (non-bridged) interfaces in case no delegated prefixes are available.
 endef
 
+define Package/odhcpd/postinst
+#!/bin/sh
+# check if we are on real system
+if [ -z "$$IPKG_INSTROOT" ]; then
+	if /etc/init.d/6relayd enabled; then
+		/etc/init.d/odhcpd enable
+		/etc/init.d/6relayd disable
+		rm -f /etc/uci-defaults/odhcpd.defaults
+
+		/usr/lib/odhcpd/transfer_config.sh
+	else
+		/etc/uci-defaults/odhcpd.defaults && rm -f /etc/uci-defaults/odhcpd.defaults
+	fi
+fi
+endef
+
 define Package/odhcpd/install
 	$(INSTALL_DIR) $(1)/usr/sbin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/odhcpd $(1)/usr/sbin/
@@ -70,6 +86,8 @@ define Package/odhcpd/install
 	$(INSTALL_BIN) ./files/odhcpd.init $(1)/etc/init.d/odhcpd
 	$(INSTALL_DIR) $(1)/etc/uci-defaults
 	$(INSTALL_BIN) ./files/odhcpd.defaults $(1)/etc/uci-defaults
+	$(INSTALL_DIR) $(1)/usr/lib/odhcpd/
+	$(INSTALL_BIN) ./files/transfer_config.sh $(1)/usr/lib/odhcpd
 endef
 
 $(eval $(call BuildPackage,odhcpd))
