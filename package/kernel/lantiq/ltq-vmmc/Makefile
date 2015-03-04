@@ -29,7 +29,7 @@ define KernelPackage/ltq-vmmc
   URL:=http://www.lantiq.com/
   DEPENDS:=@(TARGET_lantiq_falcon||TARGET_lantiq_xway) +kmod-ltq-tapi
   FILES:=$(PKG_BUILD_DIR)/src/drv_vmmc.ko
-  AUTOLOAD:=$(call AutoProbe,drv_vmmc)
+  AUTOLOAD:=$(call AutoLoad,27,drv_vmmc)
 endef
 
 define KernelPackage/ltq-vmmc/description
