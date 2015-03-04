@@ -462,10 +462,12 @@ MAKE_FLAGS := \
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include
+	$(INSTALL_DIR) $(1)/usr/linux
 	$(INSTALL_DIR) $(1)/usr/include/iptables
 	$(INSTALL_DIR) $(1)/usr/include/net/netfilter
 
 	# XXX: iptables header fixup, some headers are not installed by iptables anymore
+	$(CP) $(PKG_BUILD_DIR)/include/linux/ $(1)/usr/include/linux/
 	$(CP) $(PKG_BUILD_DIR)/include/iptables/*.h $(1)/usr/include/iptables/
 	$(CP) $(PKG_BUILD_DIR)/include/iptables.h $(1)/usr/include/
 	$(CP) $(PKG_BUILD_DIR)/include/ip6tables.h $(1)/usr/include/
