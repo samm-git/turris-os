@@ -718,7 +718,7 @@ define KernelPackage/nfnetlink-nfacct
    CONFIG_NETFILTER_NETLINK_ACCT \
    CONFIG_NETFILTER_XT_MATCH_NFACCT
   AUTOLOAD:=$(call AutoLoad,27,nfnetlink_acct xt_nfacct)
-  $(call AddDepends/nfnetlink)
+  $(call AddDepends/nfnetlink, +kmod-nf-ipt)
 endef
 
 define KernelPackage/nfnetlink-nfacct/description
