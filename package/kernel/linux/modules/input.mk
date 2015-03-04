@@ -27,7 +27,7 @@ define KernelPackage/hid-generic
   TITLE:=Generic HID device support
   KCONFIG:=CONFIG_HID_GENERIC
   FILES:=$(LINUX_DIR)/drivers/hid/hid-generic.ko
-  AUTOLOAD:=$(call AutoLoad,27,hid-generic)
+  AUTOLOAD:=$(call AutoProbe,hid-generic)
   $(call AddDepends/hid)
 endef
 
@@ -75,7 +75,7 @@ define KernelPackage/input-gpio-keys
 	CONFIG_KEYBOARD_GPIO \
 	CONFIG_INPUT_KEYBOARD=y
   FILES:=$(LINUX_DIR)/drivers/input/keyboard/gpio_keys.ko
-  AUTOLOAD:=$(call AutoLoad,27,gpio_keys)
+  AUTOLOAD:=$(call AutoProbe,gpio_keys)
   $(call AddDepends/input)
 endef
 
@@ -98,7 +98,7 @@ define KernelPackage/input-gpio-keys-polled
 	CONFIG_KEYBOARD_GPIO_POLLED \
 	CONFIG_INPUT_KEYBOARD=y
   FILES:=$(LINUX_DIR)/drivers/input/keyboard/gpio_keys_polled.ko
-  AUTOLOAD:=$(call AutoLoad,27,gpio_keys_polled,1)
+  AUTOLOAD:=$(call AutoProbe,gpio_keys_polled,1)
   $(call AddDepends/input)
 endef
 
@@ -117,7 +117,7 @@ define KernelPackage/input-gpio-encoder
   TITLE:=GPIO rotay encoder
   KCONFIG:=CONFIG_INPUT_GPIO_ROTARY_ENCODER
   FILES:=$(LINUX_DIR)/drivers/input/misc/rotary_encoder.ko
-  AUTOLOAD:=$(call AutoLoad,27,rotary_encoder)
+  AUTOLOAD:=$(call AutoProbe,rotary_encoder)
   $(call AddDepends/input,@GPIO_SUPPORT)
 endef
 
@@ -133,7 +133,7 @@ define KernelPackage/input-joydev
   TITLE:=Joystick device support
   KCONFIG:=CONFIG_INPUT_JOYDEV
   FILES:=$(LINUX_DIR)/drivers/input/joydev.ko
-  AUTOLOAD:=$(call AutoLoad,27,joydev)
+  AUTOLOAD:=$(call AutoProbe,joydev)
   $(call AddDepends/input)
 endef
 
@@ -164,7 +164,7 @@ define KernelPackage/input-matrixkmap
   TITLE:=Input matrix devices support
   KCONFIG:=CONFIG_INPUT_MATRIXKMAP
   FILES:=$(LINUX_DIR)/drivers/input/matrix-keymap.ko
-  AUTOLOAD:=$(call AutoLoad,27,matrix-keymap)
+  AUTOLOAD:=$(call AutoProbe,matrix-keymap)
   $(call AddDepends/input)
 endef
 
@@ -199,7 +199,7 @@ define KernelPackage/keyboard-imx
 	CONFIG_KEYBOARD_IMX \
 	CONFIG_INPUT_KEYBOARD=y
   FILES:=$(LINUX_DIR)/drivers/input/keyboard/imx_keypad.ko
-  AUTOLOAD:=$(call AutoLoad,27,imx_keypad)
+  AUTOLOAD:=$(call AutoProbe,imx_keypad)
 endef
 
 define KernelPackage/keyboard-imx/description
